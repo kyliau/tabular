@@ -30,4 +30,4 @@ function tabularize(text, delimiter) {
     return lines.map(line => line.join(" " + delimiter + " ")).join("\n");
 }
 
-module.exports.tabularize = tabularize;
+exports.tabularize = tabularize;
