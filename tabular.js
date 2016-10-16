@@ -18,9 +18,7 @@ function tabularize(text, delimiter) {
         const maxLength = Math.max.apply(null, lines.map(line => {
             return i < line.length ? line[i].length : 0;
         }));
-
-        // append space to words in the column whose length is shorter than
-        // 'maxLength'
+        // append space(s) to words that have length shorter than 'maxLength'
         for (let j = 0; j < lines.length; ++j) {
             if (i < lines[j].length) {
                 const word = lines[j][i];
@@ -31,3 +29,5 @@ function tabularize(text, delimiter) {
 
     return lines.map(line => line.join(" " + delimiter + " ")).join("\n");
 }
+
+module.exports.tabularize = tabularize;
