@@ -16,27 +16,29 @@ function activate(context) {
     // The commandId parameter must match the command field in package.json
     let disposable = vscode.commands.registerCommand("extension.tabular", function () {
         // The code you place here will be executed every time your command is executed
-
-        // Display a message box to the user
-        //vscode.window.showInformationMessage("Hello World!");
-
         let editor = vscode.window.activeTextEditor;
         if (!editor) {
-            return;
+            return;                                                    // RETURN
         }
         let selection = editor.selection;
         if (selection.isEmpty) {
-            return;
+            return;                                                    // RETURN
         }
         vscode.window.showInputBox({
             prompt : "Character to align"
         })
-        .then(function(delimiter) {
-            return editor.edit(function(editBuilder) {
-                let text = editor.document.getText(selection);
+        .then(delimiter => {
+            if (!delimiter) {
+                return;                                                // RETURN
+            }
+            return editor.edit(editBuilder => {
+                let text        = editor.document.getText(selection);
                 let replacement = tabular.tabularize(text, delimiter);
                 editBuilder.replace(selection, replacement);
             });
+        })
+        .catch(error => {
+            vscode.window.showErrorMessage(error.message);
         });
     });
 
